@@ -1,2 +1,3 @@
 # SimpleSearch
-It's a very simple search page (Chinese only)
+
+**是一个很简单的搜索单页，适用于自用为搜索主页的单页。仅使用百度搜索，更新随缘**
