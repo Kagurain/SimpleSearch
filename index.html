@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Search</title>
+<link rel="shortcut icon" href="https://i.loli.net/2020/11/20/b3lmri5h2GL8Kqp.png">
+<link rel="stylesheet" media="screen" href="assets/Css/style_main.css">
+<link rel="stylesheet" media="screen" href="assets/Css/style.css">
+<body>
+<!--页面布局-->
+<div class="search">
+	<div class="logo">
+		<img src="assets/Images/baidu.gif" alt="LOGO"><!--LOGO-->
+	</div>
+	<!--搜索框-->
+	<div class="bgDiv search_form">
+		<form name="q">
+		<input type="text" class="text search-input-text" value="" ><input type="button" value="🔍" class="button search-input-button" id="btn">
+		</form>
+	<!--底部图片-->
+	<ul id="search-result">
+	</ul>
+</div>
+<!--使用百度搜索-->
+<script>var suggestContainer = document.getElementsByClassName("suggest")[0];
+				var searchInput = document.getElementsByClassName("search-input-text")[0];
+				var bgDiv = document.getElementsByClassName("bgDiv")[0];
+				var searchResult = document.getElementById("search-result");
+				function clearContent() {
+					var size = searchResult.childNodes.length;
+					for(var i = size - 1; i >= 0; i--) {
+						searchResult.removeChild(searchResult.childNodes[i]);
+					}
+				};
+				function jumpPage() {
+					window.open(`https://www.baidu.com/s?word=${encodeURI(searchInput.value)}`);
+				}
+				bgDiv.addEventListener("click", function(e) {
+					if(e.target.nodeName.toLowerCase() === 'li') {
+						var keywords = e.target.innerText;
+						searchInput.value = keywords;
+						jumpPage();
+					} else if(e.target.id === 'btn') {
+						jumpPage();
+					}
+				}, false);
+				var i = 0;
+				var flag = 1;
+				bgDiv.addEventListener("keydown", function(e) {
+					var size = searchResult.childNodes.length;
+					if(e.keyCode === 13) {
+						jumpPage();
+					};
+					if(e.keyCode === 40) {
+						if(flag === 0) {
+							i = i + 2;
+						}
+						flag = 1;
+						e.preventDefault();
+						if(i >= size) {
+							i = 0;
+						}
+						if(i < size) {
+							searchInput.value = searchResult.childNodes[i++].innerText;
+						}
+					};
+					if(e.keyCode === 38) {
+						if(flag === 1) {
+							i = i - 2;
+						}
+						flag = 0;
+						e.preventDefault();
+						if(i < 0) {
+							i = size - 1;
+						}
+						if(i > -1) {
+							searchInput.value = searchResult.childNodes[i--].innerText;
+						}
+					};
+				}, false);
+				document.onclick = () => clearContent()
+				</script>
+
+<!--加载打字特效-->
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/Catalpablog/Public/css/commentTyping.js"></script>
+</div>
+</body>
+</html>
